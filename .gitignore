@@ -1,1 +1,7 @@
 firebase.js
+logs
+npm-debug.log
+firebase-debug.log
+
+
+.firebase/

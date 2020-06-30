@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Crud</title>
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/lux/bootstrap.min.css">
+    <!--Datepicker-->
+    <link rel="stylesheet" href="datepicker/datepicker.css">
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="padding: .5rem .5rem;">
+            <a href="#" class="nav-brand" id="login-icon" type="button" data-toggle="modal" data-target="#modal-box">
+                <ion-icon style="font-size: 2rem" name="person-circle-outline" class="d-inline-block navbar-brand"></ion-icon>
+            </a>
+            <div class="modal fade" id="modal-box" tabindex="-1" role="dialog" aria-labelledby="modal-boxTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document" id="modal">
+                    <div class="modal-content rounded">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal__title">login</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body  bg-secondary">
+                            <form class="was-validated">
+                                <div class="form-group">
+                                    <input 
+                                        type="text" 
+                                        class="form-control is-invalid" 
+                                        placehlder="Enter an email" 
+                                        id="login__email"
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group">
+                                    <input 
+                                        type="password" 
+                                        class="form-control is-invalid" 
+                                        placehlder="password" 
+                                        id="login__password"
+                                        required
+                                    >
+                                </div>
+                                <div class="form-group">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="btn-toolbar">
+                            <button class="btn btn-outline-primary border-0 rounded" id="login__google"><ion-icon style="font-size: 1.5rem" name="logo-google" class="d-inline-block"></ion-icon></button>
+                            <button class="btn btn-outline-primary border-0 rounded" id="login__facebook"><ion-icon name="logo-facebook" style="font-size: 1.5rem"></ion-icon></button>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-outline-primary rounded mr-auto" id="register__btn">register</button>
+                            <button type="button" class="btn btn-outline-danger rounded" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-outline-success rounded" id="login__btn">Login</button>
+                            <button type="button" class="btn btn-outline-danger rounded" id="logout__btn">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button 
+                class="navbar-toggler" 
+                type="button" 
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item align-self-center">
+                        <a class="nav-link" href="#" id="home">Home</a>
+                    </li>
+                    <li class="nav-item align-self-center">
+                        <a href="#" class="nav-link" id="complete-tasks">Completes</a>
+                    </li>
+                    <li class="nav-item align-self-center">
+                        <a href="#" class="nav-link" id="suspended-tasks">Suspended</a>
+                    </li>
+                    <li class="nav-item align-self-center">
+                        <a href="#" class="nav-link" id="active-tasks">Active</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+            <div class="container p-4">
+        <div class="row">
+            <div class="col-md-6 mb-5">
+                <div class="card rounded">
+                    <div class="card-body">
+                        <form id="task-form" class="was-validated">
+                            <div class="form-group">
+                                <input 
+                                    type="text" 
+                                    id="task-title" 
+                                    class="form-control is-invalid" 
+                                    placeholder="Task Title" 
+                                    autofocus
+                                    required
+                                />
+                            </div>
+                            <div class="form-group">
+                                <textarea 
+                                    name="task-description" 
+                                    id="task-description" 
+                                    rows="3" 
+                                    class="form-control is-invalid" 
+                                    placeholder="Task Description"
+                                    required
+                                ></textarea>
+                            </div>
+                            <div class="clearfix mb-3">
+                                <div class="form-group float-md-left col-form-label">
+                                    <input 
+                                        type="text" 
+                                        id="datepicker" 
+                                        class="is-invalid"
+                                        autocomplete="off"
+                                        placeholder="Date to finish task"
+                                        required
+                                    />
+                                </div>
+                                <div class="float-md-right">
+                                    <select class="form-control text-uppercase" id="task_state">
+                                        <option>active</option>
+                                        <option>complete</option>
+                                        <option>suspended</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button id="btn-save"class="btn btn-success btn-block rounded">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <!--TOAST-->
+                <div aria-live="polite" aria-atomic="true" style="position: fixed; min-height: 200px; z-index: 1050;">
+                    <div class="toast rounded" style="top: 0; right: 0; z-index: 5000;" data-delay="3000">
+                        <div class="toast-header">
+                            <button type="button" class="ml-2 mb-1 close ml-auto" data-dismiss="toast" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="toast-body" id="toast-message">
+                            Hello, world! This is a toast message.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" id="tasks-container">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+
+    
+
+
+    <!--SCRIPTS-->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-app.js"></script>
+    <!--Firebase services-->
+    <script src="https://www.gstatic.com/firebasejs/7.15.3/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-auth.js"></script>
+    <!--Internal firebase configuration-->
+    <script src="firebase.js"></script>
+    <!--Dependencies Js-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
+    <!--Datepicker-->
+    <script src="datepicker/datepicker.js"></script>
+    <!--Icons-->
+    <script type="module" src="https://unpkg.com/ionicons@5.0.0/dist/ionicons/ionicons.esm.js"></script>
+
+    <!--My Scripts-->
+    <script>
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore(); 
+
+        /*Datepicker Initialization*/
+        const d = new Datepicker(document.getElementById("datepicker"));
+        const date = new Date();
+
+        d.config({
+            firstdate: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+            lastdate: new Date(2030, 7, 1),
+            disableddays: d => {return(d.getDay() >= 0 && d.getDay() <= 7)},
+            format: d => {return(months_short[d.getMonth()] + " " + d.getDate() + "," + d.getFullYear())}
+        });
+
+        const elementsDOM = {
+            modalTitle: document.querySelector('#modal__title'),
+            loginIcon: document.querySelector('#login-icon'),
+            loginBtn: document.querySelector('#login__btn'),
+            logoutBtn: document.querySelector('#logout__btn'),
+            registerBtn: document.querySelector('#register__btn'),
+            loginGoogleBtn: document.querySelector('#login__google'),
+            loginFacebookBtn:document.querySelector('#login__facebook'),
+            toast: document.querySelector('#toast-message'),
+            emailInput: document.querySelector("#login__email"),
+            passwordInput: document.querySelector("#login__password"),
+            taskForm: document.querySelector('#task-form'),
+            tasksContainer: document.querySelector('#tasks-container')
+        }
+    </script>
+    <script src="index.js"></script>
+    <script src="modal.js"></script>
+</body>
+</html>
+
