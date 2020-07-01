@@ -25,8 +25,9 @@ elementsDOM.loginBtn.addEventListener('click', (e) => {
 
 elementsDOM.logoutBtn.addEventListener('click', async () => {
     try {
-        await firebase.auth().signOut()
-        elementsDOM.toast.textContent = 'Bye bye!!!'
+        await firebase.auth().signOut();
+        elementsDOM.tasksContainer.innerHTML = '';
+        elementsDOM.toast.textContent = 'Bye bye!!!';
         $('.modal').modal('hide');
         $('.toast').toast('show');
     } catch(error) {

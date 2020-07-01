@@ -151,9 +151,9 @@ const renderTasksUI = doc => {
             <span class="float-right text-${color} ">${moment(dateFormat).format('ll')}</span>
         </div>
         <div class="card-footer clearfix">
-            <div class="mt-2 float-left">
-                <button class="btn btn-danger btn-delete rounded" data-id="${task.id}">Delete</button>
-                <button class="btn btn-info btn-edit rounded" data-id="${task.id}">Edit</button>
+            <div class="mt-2">
+                <button class="btn btn-danger btn-delete rounded btn-sm-inline" data-id="${task.id}">Delete</button>
+                <button class="btn btn-info btn-edit rounded btn-sm-inline" data-id="${task.id}">Edit</button>
             </div>
         </div>
     </div>`;
